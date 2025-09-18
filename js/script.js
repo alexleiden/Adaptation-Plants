@@ -48,14 +48,25 @@ const conclusionText = `
 // Класс для управления сравнением растений
 class PlantComparison {
   constructor() {
-    this.init();
+    // Проверяем готовность DOM
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.init());
+    } else {
+      this.init();
+    }
   }
 
   init() {
-    this.addSVGAnimations();
-    this.setupEventListeners();
-    this.addAnimations();
-    this.createInteractiveFeatures();
+    console.log('🚀 Инициализация PlantComparison...');
+
+    // Добавляем небольшую задержку для гарантии загрузки DOM
+    setTimeout(() => {
+      this.addSVGAnimations();
+      this.setupEventListeners();
+      this.addAnimations();
+      this.createInteractiveFeatures();
+      console.log('✅ PlantComparison инициализирован успешно');
+    }, 100);
   }
 
   // Анимации для SVG элементов
@@ -106,18 +117,34 @@ class PlantComparison {
 
   // Настройка обработчиков событий
   setupEventListeners() {
+    console.log('📝 Настройка обработчиков событий...');
+
     const conclusionBtn = document.getElementById('show-conclusion-btn');
     const closeConclusionBtn = document.getElementById('close-conclusion-btn');
 
+    console.log('Кнопка показать вывод:', conclusionBtn);
+    console.log('Кнопка закрыть вывод:', closeConclusionBtn);
+
     if (conclusionBtn) {
-      conclusionBtn.addEventListener('click', this.showConclusion.bind(this));
+      conclusionBtn.addEventListener('click', e => {
+        console.log('🖱️ Клик по кнопке "Показати висновок"');
+        e.preventDefault();
+        this.showConclusion();
+      });
+      console.log('✅ Обработчик для кнопки показа вывода добавлен');
+    } else {
+      console.error('❌ Кнопка "show-conclusion-btn" не найдена!');
     }
 
     if (closeConclusionBtn) {
-      closeConclusionBtn.addEventListener(
-        'click',
-        this.hideConclusion.bind(this)
-      );
+      closeConclusionBtn.addEventListener('click', e => {
+        console.log('🖱️ Клик по кнопке закрытия');
+        e.preventDefault();
+        this.hideConclusion();
+      });
+      console.log('✅ Обработчик для кнопки закрытия добавлен');
+    } else {
+      console.log('ℹ️ Кнопка закрытия пока скрыта');
     }
 
     // Добавляем интерактивность к строкам таблицы
@@ -129,36 +156,59 @@ class PlantComparison {
     // Добавляем обработчик клавиши Escape
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
+        console.log('⌨️ Нажата клавиша Escape');
         this.hideConclusion();
       }
     });
+
+    console.log('✅ Все обработчики событий настроены');
   }
 
   // Показать вывод
   showConclusion() {
+    console.log('📋 Показываем вывод...');
+
     const conclusionTextEl = document.getElementById('conclusion-text');
     const conclusionBtn = document.getElementById('show-conclusion-btn');
     const closeConclusionBtn = document.getElementById('close-conclusion-btn');
 
+    console.log('Элементы:', {
+      conclusionTextEl,
+      conclusionBtn,
+      closeConclusionBtn,
+    });
+
     if (conclusionTextEl && conclusionBtn && closeConclusionBtn) {
-      conclusionTextEl.innerHTML = conclusionText.replace(/\n/g, '<br>');
-      conclusionTextEl.classList.add('fade-in-up');
+      try {
+        // Обновляем текст
+        conclusionTextEl.innerHTML = conclusionText.replace(/\n/g, '<br>');
+        conclusionTextEl.classList.add('fade-in-up');
 
-      // Скрываем кнопку "Показати висновок"
-      conclusionBtn.style.display = 'none';
+        // Скрываем кнопку "Показати висновок"
+        conclusionBtn.style.display = 'none';
 
-      // Показываем кнопку закрытия
-      closeConclusionBtn.style.display = 'flex';
-      closeConclusionBtn.classList.add('fade-in-up');
+        // Показываем кнопку закрытия
+        closeConclusionBtn.style.display = 'flex';
+        closeConclusionBtn.classList.add('fade-in-up');
 
-      // Изменяем выравнивание текста на левое для лучшей читаемости
-      conclusionTextEl.style.textAlign = 'left';
+        // Изменяем выравнивание текста на левое для лучшей читаемости
+        conclusionTextEl.style.textAlign = 'left';
 
-      // Добавляем эффект появления
-      setTimeout(() => {
-        closeConclusionBtn.style.opacity = '1';
-        closeConclusionBtn.style.transform = 'scale(1)';
-      }, 300);
+        // Добавляем эффект появления
+        setTimeout(() => {
+          closeConclusionBtn.style.opacity = '1';
+          closeConclusionBtn.style.transform = 'scale(1)';
+        }, 300);
+
+        console.log('✅ Вывод показан успешно');
+      } catch (error) {
+        console.error('❌ Ошибка при показе вывода:', error);
+      }
+    } else {
+      console.error('❌ Не все элементы найдены для показа вывода');
+      console.error('conclusionTextEl:', conclusionTextEl);
+      console.error('conclusionBtn:', conclusionBtn);
+      console.error('closeConclusionBtn:', closeConclusionBtn);
     }
   }
 
@@ -410,34 +460,140 @@ class Utils {
   }
 }
 
-// Инициализация при загрузке страницы
+// Инициализация при загрузке страницы - ОСНОВНОЙ БЛОК
 document.addEventListener('DOMContentLoaded', () => {
-  const comparison = new PlantComparison();
+  console.log('🌟 DOM загружен, запускаем приложение...');
 
-  // Добавляем случайный факт в футер
-  const footer = document.querySelector('footer p');
-  if (footer) {
-    footer.innerHTML += `<br><small>💡 Цікавий факт: ${Utils.getRandomFact()}</small>`;
+  try {
+    const comparison = new PlantComparison();
+    console.log('✅ PlantComparison создан:', comparison);
+
+    // Добавляем случайный факт в футер
+    const footer = document.querySelector('footer p');
+    if (footer) {
+      footer.innerHTML += `<br><small>💡 Цікавий факт: ${Utils.getRandomFact()}</small>`;
+    }
+
+    // Добавляем подсказки к важным элементам
+    const agaveCard = document.querySelector('.plant-card.agave h2');
+    const bananaCard = document.querySelector('.plant-card.banana h2');
+
+    if (agaveCard) {
+      Utils.createTooltip(agaveCard, 'Клацніть для додаткової інформації');
+    }
+    if (bananaCard) {
+      Utils.createTooltip(bananaCard, 'Клацніть для додаткової інформації');
+    }
+
+    console.log('🌱 Додаток порівняння рослин завантажено успішно!');
+
+    // Дополнительная проверка кнопки через 1 секунду
+    setTimeout(() => {
+      const btn = document.getElementById('show-conclusion-btn');
+      console.log('🔍 Проверка кнопки через 1 секунду:', btn);
+      if (btn) {
+        console.log('✅ Кнопка найдена и готова к работе');
+
+        // Принудительно добавляем обработчик если его нет
+        if (!btn.onclick && !btn._hasClickListener) {
+          btn.addEventListener('click', function () {
+            console.log('🖱️ Резервный обработчик сработал!');
+            if (window.plantComparison) {
+              window.plantComparison.showConclusion();
+            }
+          });
+          btn._hasClickListener = true;
+          console.log('🔧 Добавлен резервный обработчик');
+        }
+      } else {
+        console.error('❌ Кнопка все еще не найдена через 1 секунду!');
+      }
+    }, 1000);
+
+    // Сохраняем экземпляр в глобальной области для отладки
+    window.plantComparison = comparison;
+  } catch (error) {
+    console.error('❌ Ошибка при инициализации:', error);
+    console.error('Stack trace:', error.stack);
   }
-
-  // Добавляем подсказки к важным элементам
-  const agaveCard = document.querySelector('.plant-card.agave h2');
-  const bananaCard = document.querySelector('.plant-card.banana h2');
-
-  if (agaveCard) {
-    Utils.createTooltip(agaveCard, 'Клацніть для додаткової інформації');
-  }
-  if (bananaCard) {
-    Utils.createTooltip(bananaCard, 'Клацніть для додаткової інформації');
-  }
-
-  console.log('🌱 Додаток порівняння рослин завантажено успішно!');
 });
+
+// Fallback для старых браузеров
+if (document.readyState !== 'loading') {
+  console.log('📄 DOM уже загружен, инициализируем немедленно...');
+  setTimeout(() => {
+    if (!window.plantComparison) {
+      console.log('🔄 Запуск fallback инициализации...');
+      try {
+        window.plantComparison = new PlantComparison();
+      } catch (error) {
+        console.error('❌ Fallback ошибка:', error);
+      }
+    }
+  }, 500);
+}
 
 // Обработка ошибок
 window.addEventListener('error', e => {
   console.error('Помилка в додатку:', e.error);
 });
+
+// Резервная функция для onclick в HTML
+function handleConclusionClick() {
+  console.log('🔧 Резервная функция handleConclusionClick вызвана');
+
+  if (window.plantComparison) {
+    window.plantComparison.showConclusion();
+  } else {
+    console.log('⚠️ plantComparison не найден, показываем вывод напрямую');
+    showConclusionDirect();
+  }
+}
+
+// Прямая функция показа вывода без класса
+function showConclusionDirect() {
+  console.log('📋 Показываем вывод напрямую...');
+
+  const conclusionTextEl = document.getElementById('conclusion-text');
+  const conclusionBtn = document.getElementById('show-conclusion-btn');
+  const closeConclusionBtn = document.getElementById('close-conclusion-btn');
+
+  const conclusionText = `
+Агава та банан демонструють протилежні стратегії адаптації до різних кліматичних умов. <br><br>
+
+🌵 <strong>АГАВА</strong> розвинула механізми максимальної економії води:<br>
+• М'ясисті листки служать резервуарами для води<br>
+• Восковий шар мінімізує випаровування<br>
+• Колючки захищають від тварин, що шукають воду<br><br>
+
+🍌 <strong>БАНАН</strong> пристосований до умов надлишку вологи:<br>
+• М'які листки забезпечують ефективний фотосинтез<br>
+• Підземне стебло дозволяє швидко відновлюватися<br>
+• Потребує постійної високої вологості та освітлення<br><br>
+
+Ці адаптації є результатом мільйонів років еволюції в кардинально різних екосистемах - від екстремально посушливих пустель до вологих тропічних лісів.
+    `;
+
+  if (conclusionTextEl && conclusionBtn && closeConclusionBtn) {
+    conclusionTextEl.innerHTML = conclusionText;
+    conclusionTextEl.style.textAlign = 'left';
+
+    conclusionBtn.style.display = 'none';
+    closeConclusionBtn.style.display = 'flex';
+    closeConclusionBtn.style.opacity = '1';
+
+    // Добавляем обработчик для кнопки закрытия
+    closeConclusionBtn.onclick = function () {
+      conclusionTextEl.innerHTML =
+        'Натисніть кнопку нижче, щоб побачити висновок про адаптації рослин.';
+      conclusionTextEl.style.textAlign = 'center';
+      conclusionBtn.style.display = 'inline-block';
+      closeConclusionBtn.style.display = 'none';
+    };
+
+    console.log('✅ Вывод показан прямой функцией');
+  }
+}
 
 // Экспорт для возможного использования в других модулях
 if (typeof module !== 'undefined' && module.exports) {
