@@ -63,7 +63,7 @@ class PlantComparison {
     setTimeout(() => {
       this.addSVGAnimations();
       this.setupEventListeners();
-      this.addAnimations();
+      // this.addAnimations();
       this.createInteractiveFeatures();
       console.log('✅ PlantComparison инициализирован успешно');
     }, 100);
