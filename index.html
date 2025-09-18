@@ -1,15 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="./favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>goit-js-hw-02</title>
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <title>Порівняння адаптацій рослин</title>
+    <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <script src="./js/task-1.js"></script>
-    <script src="./js/task-2.js"></script>
-    <script src="./js/task-3.js"></script>
-    <script src="./js/task-4.js"></script>
+    <div class="container">
+      <header>
+        <h1>
+          Практична робота Дениса Байрачного :<br />
+          <span class="highlights">
+            Порівняння адаптацій рослин до різного клімату
+          </span>
+        </h1>
+      </header>
+
+      <main>
+        <section class="plants-overview">
+          <div class="plant-card agave">
+            <h2>Агава — мешканка пустель</h2>
+            <div class="plant-image">
+              <img src="./img/images.jpg" alt="Агава" id="agave-img" />
+            </div>
+            <div class="climate-info">
+              <h3>Кліматичні умови:</h3>
+              <ul>
+                <li>Посушливий клімат</li>
+                <li>Нестача води</li>
+                <li>Високі температури</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="plant-card banana">
+            <h2>Банан — культура тропіків</h2>
+            <div class="plant-image">
+              <img
+                src="./img/banan-bebi-476x360.jpg"
+                alt="Банан"
+                id="banana-img"
+              />
+            </div>
+            <div class="climate-info">
+              <h3>Кліматичні умови:</h3>
+              <ul>
+                <li>Температура 25-30°C</li>
+                <li>Висока вологість</li>
+                <li>Достатнє освітлення</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="comparison-section">
+          <h2>Порівняльна таблиця адаптацій</h2>
+          <div class="table-container">
+            <table id="comparison-table">
+              <thead>
+                <tr>
+                  <th>Ознака для порівняння</th>
+                  <th class="agave-col">Агава (пустеля)</th>
+                  <th class="banana-col">Банан (тропіки)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Стебло</strong></td>
+                  <td>Вкорочене стебло з розеткою листків</td>
+                  <td>Підземне стебло (кореневище)</td>
+                </tr>
+                <tr>
+                  <td><strong>Листки</strong></td>
+                  <td>Великі, м'ясисті, колючі з восковим шаром</td>
+                  <td>Великі, м'які листкові пластинки</td>
+                </tr>
+                <tr>
+                  <td><strong>Запасання води</strong></td>
+                  <td>Розвинена тканина для запасання води</td>
+                  <td>Не потребує запасання води</td>
+                </tr>
+                <tr>
+                  <td><strong>Захист від випаровування</strong></td>
+                  <td>Восковий шар на поверхні листків</td>
+                  <td>Відсутній (не потрібен)</td>
+                </tr>
+                <tr>
+                  <td><strong>Захист від тварин</strong></td>
+                  <td>Колючки на листках</td>
+                  <td>Відсутні захисні утворення</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="features-section">
+          <div class="features-grid">
+            <div class="feature-card common">
+              <h3>Спільні ознаки</h3>
+              <ul id="common-features">
+                <li>Великі листки</li>
+                <li>Багаторічні рослини</li>
+                <li>Витримують високі температури</li>
+              </ul>
+            </div>
+
+            <div class="feature-card differences">
+              <h3>Відмінні ознаки</h3>
+              <div class="differences-container">
+                <div class="agave-differences">
+                  <h4>Агава:</h4>
+                  <ul id="agave-features">
+                    <li>М'ясисті листки</li>
+                    <li>Восковий захисний шар</li>
+                    <li>Колючки для захисту</li>
+                    <li>Економія води</li>
+                  </ul>
+                </div>
+                <div class="banana-differences">
+                  <h4>Банан:</h4>
+                  <ul id="banana-features">
+                    <li>М'які листкові пластинки</li>
+                    <li>Потреба у вологості</li>
+                    <li>Чутливість до світла</li>
+                    <li>Швидке відновлення</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="conclusion-section">
+          <div class="conclusion-card">
+            <h3>Висновок</h3>
+            <p id="conclusion-text">
+              Натисніть кнопку нижче, щоб побачити висновок про адаптації
+              рослин.
+            </p>
+            <button id="show-conclusion-btn">Показати висновок</button>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p>
+          Практична робота з біології<br />
+          Денис Байрачний Development &copy; 2025
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
   </body>
 </html>
